@@ -66,3 +66,20 @@ router.get("/customer/:phone", async (req, res) => {
 });
 
 module.exports = router;
+
+// 📊 Admin summary
+router.get("/summary", async (req, res) => {
+  try {
+    const customers = await Customer.find();
+    const totalCustomers = customers.length;
+    const totalPoints = customers.reduce((sum, c) => sum + (c.points || 0), 0);
+
+    // optional: points redeemed if you track them later
+    res.json({
+      totalCustomers,
+      totalPoints,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
