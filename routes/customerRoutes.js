@@ -68,16 +68,27 @@ router.get("/customer/:phone", async (req, res) => {
 module.exports = router;
 
 // 📊 Admin summary
+// 📊 Enhanced Admin Summary
 router.get("/summary", async (req, res) => {
   try {
-    const customers = await Customer.find();
+    // Fetch all customers sorted by highest points
+    const customers = await Customer.find().sort({ points: -1 });
+
     const totalCustomers = customers.length;
     const totalPoints = customers.reduce((sum, c) => sum + (c.points || 0), 0);
 
-    // optional: points redeemed if you track them later
+    // Mock total purchase if you have a purchase field, else compute points * some factor
+    const enriched = customers.map((c) => ({
+      name: c.name,
+      phone: c.phone,
+      points: c.points || 0,
+      totalPurchase: (c.points || 0) * 10, // Example: 1 point = ₹10 spent
+    }));
+
     res.json({
       totalCustomers,
       totalPoints,
+      customers: enriched,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
