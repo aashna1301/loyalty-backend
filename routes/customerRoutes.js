@@ -82,7 +82,7 @@ router.get("/summary", async (req, res) => {
       name: c.name,
       phone: c.phone,
       points: c.points || 0,
-      totalPurchase: (c.points || 0) * 10, // Example: 1 point = ₹10 spent
+      totalPurchase: (c.points || 0) * 50, // Example: 1 point = ₹10 spent
     }));
 
     res.json({
