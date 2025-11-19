@@ -24,7 +24,7 @@ router.post("/customers", async (req, res) => {
 router.post("/add-points", async (req, res) => {
   try {
     const { phone, amount } = req.body;
-    const points = Math.floor(amount / 100); // 1 point = ₹100
+    const points = Math.floor(amount / 50); // 1 point = ₹100
 
     const customer = await Customer.findOneAndUpdate(
       { phone },
