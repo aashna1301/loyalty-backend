@@ -71,8 +71,8 @@ module.exports = router;
 // 📊 Enhanced Admin Summary
 router.get("/summary", async (req, res) => {
   try {
-    // Fetch all customers sorted by highest points
-    const customers = await Customer.find().sort({ points: -1 });
+    // Fetch all customers sorted by highest points    
+    const customers = await Customer.find({ points: { $gt: 0 } }).sort({ points: -1 });
 
     const totalCustomers = customers.length;
     const totalPoints = customers.reduce((sum, c) => sum + (c.points || 0), 0);
